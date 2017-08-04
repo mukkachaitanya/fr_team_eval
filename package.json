@@ -1,0 +1,15 @@
+{
+  "name": "csv-reducer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chaitanya Mukka",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "csv": "^1.1.1"
+  }
+}
