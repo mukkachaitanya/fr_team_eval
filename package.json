@@ -4,12 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha test"
   },
   "author": "Chaitanya Mukka",
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.5.0",
     "csv": "^1.1.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.1",
+    "mocha": "^3.5.0"
   }
 }

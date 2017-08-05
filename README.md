@@ -15,6 +15,7 @@ Outputs a teamScores.csv file to the current directory.
 ## Issues
 
 1. Uses `csv` npm module. Instead need to implement a native parser.
-2. Uses `bluebird` for promises and async. Can either try to use `async/await` or make the operations synchronous(not reccomended).
+~~2. Uses `bluebird` for promises and async. Can either try to use `async/await` or make the operations synchronous(not reccomended).~~ (Using bluebird)
 3. Make the package more modular. Separate I/O and operations.
 4. Handle invalid entries.
+~~5. Write basic test~~
