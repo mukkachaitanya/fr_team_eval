@@ -1,6 +1,6 @@
-var Promise = require('bluebird');
-var parser = require('./csvParse');
-var readFile = Promise.promisify(require('fs').readFile);
+const Promise = require('bluebird');
+const parser = require('./csvParse');
+const readFile = Promise.promisify(require('fs').readFile);
 
 var fileContents = function(file) {
 	

@@ -2,7 +2,7 @@
   "name": "pairwise-evaluator",
   "version": "1.0.0",
   "description": "Script for Pairwise Evaluation in CS F213 Lab sessions",
-  "main": "main.js",
+  "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test"
   },
