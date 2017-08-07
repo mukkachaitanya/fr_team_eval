@@ -1,8 +1,8 @@
 {
-  "name": "csv-reducer",
+  "name": "pairwise-evaluator",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Script for Pairwise Evaluation in CS F213 Lab sessions",
+  "main": "main.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test"
   },
@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.5.0",
-    "csv": "^1.1.1"
+    "csv": "^1.1.1",
+    "caporal": "^0.7.0"
   },
   "devDependencies": {
     "chai": "^4.1.1",
