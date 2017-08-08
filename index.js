@@ -11,7 +11,7 @@ prog
     .argument("<scorescsv>", "CSV Data for Scores")
     .argument("[teamScorescsv]", "CSV file to store evaluations")
     .action(function(args, options, logger) {
-        eval_teamwise.writeResult(args);
+        eval_teamwise.writeResult(args,logger);
     });
 
 prog.parse(process.argv);
