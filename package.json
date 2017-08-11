@@ -10,8 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.5.0",
+    "caporal": "^0.7.0",
     "csv": "^1.1.1",
-    "caporal": "^0.7.0"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "chai": "^4.1.1",

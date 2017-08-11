@@ -1,6 +1,7 @@
 const Promise = require("bluebird");
 const input = require("../input");
 const output = require("../output");
+const _ = require('lodash');
 
 /*
 * The functions takes necessary agruments:
@@ -58,21 +59,17 @@ var computeTeamResults = function(args, logger = console) {
         // finalMarks is of the form [[studentID, score]]
         var finalMarks = [["studentID", "score"]];
 
-        for (team in teamView) {
-            var members = teamView[team];
-            var memberScores = [];
+        _.forIn(teamView, function(members, team) {
+            // pick the objects corresponding to the team members from marksView, and get the scores in array; 
+            // find the max of the array
+            var maxScore = _.max(_.values(_.pick(marksView, members)));
 
-            // get the scores of the members of the team
-            for (member of members) memberScores.push(marksView[member] || 0);
+            // zip together the student id and the maxScore; type: [[id,score]]
+            var updatedScores = _.zip(members,_.fill(Array(members.length),maxScore));
 
-            // get max score
-            var maxScore = memberScores.reduce(function(a, b) {
-                return a < b ? b : a;
-            });
-
-            // push final marks of the teammates
-            for (member of members) finalMarks.push([member, maxScore]);
-        }
+            // for each of the member push them onto finalMarks
+            _.forEach(updatedScores,(tup)=>finalMarks.push(tup));
+        });
 
         // TODO: log members those who don't have any assigned teams
         //logger.info(`No teams found for ${members}`);

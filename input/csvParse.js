@@ -5,7 +5,7 @@
 var Parser = function(content, options) {
 	this.options = options || { "delimiter": "," };
 
-	// Convert the string into a [[..]] format
+	// Convert the string into a [[a,b]] format
 	this.content = content.trim().split("\n").map(function(val) {
 		return val.split(',');
 	});
@@ -14,11 +14,11 @@ var Parser = function(content, options) {
 	this.headers = this.content.shift();
 };
 
-parser.prototype.getContent = function() {
+Parser.prototype.getContent = function() {
 	return this.content;
 };
 
-parser.prototype.getHeaders = function() {
+Parser.prototype.getHeaders = function() {
 	return this.headers;
 };
 
