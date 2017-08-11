@@ -11,7 +11,7 @@ describe("Evaluation", function() {
 		var expectedMarks =
 			"studentID,score\n2012A7PS001G,9\n2012A7PS005G,9\nstudent1,5\nstudent3,5\n2011B1A7001G,8\n2012A7PS003G,8\nstudent2,8";
 
-		var tempFile = "./tempFile.csv";
+		var tempFile = __dirname + "/tempFile.csv";
 
 		var args = {
 			scorescsv: __dirname + "/test_files/scores.csv",
@@ -23,7 +23,7 @@ describe("Evaluation", function() {
 			.then(function() {
 				return readFile(tempFile, "utf8").then(function(cont) {
 					expect(cont).to.equal(expectedMarks);
-					return unlink(tempFile)
+					return unlink(tempFile);
 				});
 			})
 			.then(done);
