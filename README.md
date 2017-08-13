@@ -1,4 +1,4 @@
-[![Test Coverage](https://codeclimate.com/github/mukkachaitanya/fr_team_eval/badges/coverage.svg)](https://codeclimate.com/github/mukkachaitanya/fr_team_eval/coverage)
+[![Build Status](https://travis-ci.org/mukkachaitanya/fr_team_eval.svg?branch=master)](https://travis-ci.org/mukkachaitanya/fr_team_eval) [![Test Coverage](https://codeclimate.com/github/mukkachaitanya/fr_team_eval/badges/coverage.svg)](https://codeclimate.com/github/mukkachaitanya/fr_team_eval/coverage)
 # Team Evaluation
 This tries to implement [FR-TEAM-EVAL](https://github.com/AutolabJS/AutolabJS/wiki/FR-Team-Evaluation) .
 

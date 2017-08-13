@@ -17,10 +17,8 @@ describe("Input", function() {
 				["student2", "2"],
 				["student3", "3"]
 			];
-			const expectHeaders = ["studentID", "score"];
 
-			expect(contents.getContent()).to.eql(expectRows);
-			expect(contents.getHeaders()).to.eql(expectHeaders);
+			expect(contents).to.eql(expectRows);
 		}).then(done);
 	});
 });

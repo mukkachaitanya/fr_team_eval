@@ -1,7 +1,7 @@
 const Promise = require("bluebird");
 const input = require("../input");
 const output = require("../output");
-const _ = require('lodash');
+const _ = require("lodash");
 
 /*
 * The functions takes necessary agruments:
@@ -24,9 +24,8 @@ var computeTeamResults = function(args, logger = console) {
     return Promise.all([promiseMarks, promiseTeam]).then(function(res) {
 
         // res contains the returns of all the promises in the order of as in the input array of promises
-        const marks = res[0].getContent(); // [[studentID,score]]
-        const teams = res[1].getContent(); // [[studentID,team]]
-
+        const marks = res[0]; // [[studentID,score]]
+        const teams = res[1]; // [[studentID,team]]
 
         /*Object of the form: 
         * {
@@ -60,23 +59,27 @@ var computeTeamResults = function(args, logger = console) {
         var finalMarks = [["studentID", "score"]];
 
         _.forIn(teamView, function(members, team) {
-            // pick the objects corresponding to the team members from marksView, and get the scores in array; 
+            // pick the objects corresponding to the team members from marksView, and get the scores in array;
             // find the max of the array
             var maxScore = _.max(_.values(_.pick(marksView, members)));
 
             // zip together the student id and the maxScore; type: [[id,score]]
-            var updatedScores = _.zip(members,_.fill(Array(members.length),maxScore));
+            var updatedScores = _.zip(
+                members,
+                _.fill(Array(members.length), maxScore)
+            );
 
             // for each of the member push them onto finalMarks
-            _.forEach(updatedScores,(tup)=>finalMarks.push(tup));
+            _.forEach(updatedScores, tup => finalMarks.push(tup));
         });
 
         // TODO: log members those who don't have any assigned teams
-        //logger.info(`No teams found for ${members}`);
+        // logger.info(_.difference(finalMarks, marks));
         return output(finalMarks, args.teamScorescsv || "./teamScores.csv");
-    });
+    }).catch(err=>{console.error(err)});
 };
 
 module.exports = {
     writeResult: computeTeamResults
 };
+

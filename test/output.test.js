@@ -18,7 +18,7 @@ describe("Output", function() {
 			["student3", "3"]
 		];
 		const expectOutput =
-			"2012A7PS001G,9\n2012A7PS005G,9\n2011B1A7001G,8\n2012A7PS003G,4\nstudent1,5\nstudent2,2\nstudent3,3";
+			"2012A7PS001G,9\n2012A7PS005G,9\n2011B1A7001G,8\n2012A7PS003G,4\nstudent1,5\nstudent2,2\nstudent3,3\n";
 
 		var tempFile = __dirname + '/tempFile.csv';
 		output(input, tempFile)
