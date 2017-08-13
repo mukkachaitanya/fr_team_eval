@@ -4,35 +4,38 @@ const output = require("../output");
 const _ = require("lodash");
 
 /*
-* The functions takes necessary agruments:
+* The function takes necessary agruments:
 * scorescsv : The path to the csv file coresponding to the scores of students
 * teamcsv : The path to the csv file corresponding to the teams of the students
-* [teamScorescsv] :  An oprional agrument specifying the path to the csv file to output evaluated marks
+* [teamScorescsv] :  An optional agrument specifying the path to the csv file to output evaluated marks
 *
 * @author: Chaitanya Mukka
-*   
+*
 */
 
 
-var computeTeamResults = function(args, logger = console) {
-
-    // promises which resolve to return contents parsed of the scorescsv file and teamcsv files
-    const promiseMarks = input.csvContents(args.scorescsv);
-    const promiseTeam = input.csvContents(args.teamcsv);
-
-
+var computeTeamResults = function(args) {
+    // Check if whether to read from SQL.
+    const database = args.database
+    if (typeof database !== 'undefined') {
+        promiseMarks = input.sqlContents(database, "scores")
+        promiseTeam = input.sqlContents(database, "team")
+    }
+    else {
+        // promises which resolve to return contents parsed of the scorescsv file and teamcsv files
+        promiseMarks = input.csvContents(args.scorescsv);
+        promiseTeam = input.csvContents(args.teamcsv);
+    }
     return Promise.all([promiseMarks, promiseTeam]).then(function(res) {
-
         // res contains the returns of all the promises in the order of as in the input array of promises
         const marks = res[0]; // [[studentID,score]]
         const teams = res[1]; // [[studentID,team]]
 
-        /* teamView Object of the form: 
+        /* teamView Object of the form:
         * {
         *   teamNumber : [Students of the team],
         * }
         */
-
         var teamView = {};
 
         // creates the object of the above form from teams array
@@ -47,7 +50,6 @@ var computeTeamResults = function(args, logger = console) {
         *   studentID : int(score),
         * }
         */
-
         var marksView = {};
 
         // creates the object of the above from from teams array
