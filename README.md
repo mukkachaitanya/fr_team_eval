@@ -9,7 +9,8 @@ To run the program:
 or
 ```yarn```
 
-2. Usage `node index.js <path_to_team.csv_file> <path_to_scores.csv_file>`
+2. Usage `node index.js <path_to_team.csv_file> <path_to_scores.csv_file>` when reading from CSVs
+   `node index.js <path_to_team.csv_file> <path_to_scores.csv_file> --sql=<database name>` when reading from SQL tables.
 
 Outputs a teamScores.csv file to the current directory.
 

@@ -10,8 +10,11 @@ prog
     .argument("<teamcsv>", "CSV Data for Teams")
     .argument("<scorescsv>", "CSV Data for Scores")
     .argument("[teamScorescsv]", "CSV file to store evaluations")
+    .option('--sql <database>', prog.LIST)
     .action(function(args, options, logger) {
-        eval_teamwise.writeResult(args,logger);
+        if(typeof options.sql !== 'undefined')
+            args.database = options.sql;
+        eval_teamwise.writeResult(args, logger);
     });
 
 prog.parse(process.argv);
