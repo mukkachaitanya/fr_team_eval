@@ -14,7 +14,7 @@ const _ = require('lodash');
 */
 
 
-var computeTeamResults = function(args, logger=console) {
+var computeTeamResults = function(args) {
     // Check if whether to read from SQL.
     const database = args.database
     if (typeof database !== 'undefined') {
@@ -79,7 +79,7 @@ var computeTeamResults = function(args, logger=console) {
         // TODO: log members those who don't have any assigned teams
         //logger.info(`No teams found for ${members}`);
         return output(finalMarks, args.teamScorescsv || "./teamScores.csv");
-    }).catch(err => { logger.error(err)});
+    }).catch(err => { console.error(err)});
 };
 
 module.exports = {

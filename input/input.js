@@ -22,7 +22,8 @@ var sqlRead = function(database, table) {
             host: "localhost",
             port: "3306",
             user: "root",
-            database: database  
+            password: "root",
+            database: database
         })
     );
     var content = [];
@@ -39,7 +40,7 @@ var sqlRead = function(database, table) {
         })
         .then(function() {
             link.end();
-            return content;            
+            return content;
         }).catch(err => { console.error(err); });
 };
 
