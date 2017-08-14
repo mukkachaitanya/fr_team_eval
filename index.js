@@ -7,8 +7,8 @@ const eval_teamwise = require("./eval_teamwise");
 prog
     .version("1.0.0")
     .description("Program to facilitate pairwise evaluation in CS F213 Labs")
-    .argument("<teamcsv>", "CSV Data for Teams")
-    .argument("<scorescsv>", "CSV Data for Scores")
+    .argument("<teams>", "Path to the CSV data file or the SQL table name(use --sql option) for Team data")
+    .argument("<scores>", "Path to the CSV data file or the SQL table name(use --sql option) for Scores data")
     .argument("[teamScorescsv]", "CSV file to store evaluations")
     .option('--sql <database>', prog.LIST)
     .action(function(args, options, logger) {
