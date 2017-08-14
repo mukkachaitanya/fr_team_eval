@@ -14,8 +14,8 @@ describe("Evaluation", function() {
 		var tempFile = __dirname + "/tempFile.csv";
 
 		var args = {
-			scores: __dirname + "/test_files/scores.csv",
-			teams: __dirname + "/test_files/team.csv", 
+			scorescsv: __dirname + "/test_files/scores.csv",
+			teamcsv: __dirname + "/test_files/team.csv",
 			teamScorescsv: tempFile
 		};
 
