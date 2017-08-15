@@ -4,7 +4,8 @@
   "description": "Script for Pairwise Evaluation in CS F213 Lab sessions",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test"
+    "test": "./node_modules/mocha/bin/mocha test",
+    "coverage" : "./node_modules/.bin/nyc ./node_modules/mocha/bin/mocha"
   },
   "author": "Chaitanya Mukka",
   "license": "ISC",

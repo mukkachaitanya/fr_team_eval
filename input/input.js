@@ -18,17 +18,19 @@ var options = {
 
 var fileContents = function(file) {
     return readFile(file, "utf8").then(function(content) {
-        return new parser(content);
+        return parser(content, options);
     });
 };
 
 var sqlRead = function(database, table) {
     var link = Promise.promisifyAll(
         mysql.createConnection({
+            connectionLimit : 100, 
             host: "localhost",
             port: "3306",
-            user: "root",
-            database: database  
+            user: database.user,
+            password: database.password,
+            database: database.db  
         })
     );
     var content = [];
