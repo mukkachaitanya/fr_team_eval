@@ -6,7 +6,7 @@ const readFile = Promise.promisify(require("fs").readFile);
 var options = {
 	trim: true,
 	auto_parse: false,
-	columns: header => {console.log(header)}
+	columns: header => {}
 };
 
 /*

@@ -27,7 +27,7 @@ var computeTeamResults = function(args, logger = console) {
         const marks = res[0]; // [[studentID,score]]
         const teams = res[1]; // [[studentID,team]]
 
-        /*Object of the form: 
+        /* teamView Object of the form: 
         * {
         *   teamNumber : [Students of the team],
         * }
@@ -42,7 +42,7 @@ var computeTeamResults = function(args, logger = console) {
         });
 
 
-        /*Object of the form: 
+        /* marksView Object of the form: 
         * {
         *   studentID : int(score),
         * }
@@ -60,8 +60,8 @@ var computeTeamResults = function(args, logger = console) {
 
         _.forIn(teamView, function(members, team) {
             // pick the objects corresponding to the team members from marksView, and get the scores in array;
-            // find the max of the array
-            var maxScore = _.max(_.values(_.pick(marksView, members)));
+            // find the max of the array if scores are submitted else 0
+            var maxScore = _.max(_.values(_.pick(marksView, members))) || 0;
 
             // zip together the student id and the maxScore; type: [[id,score]]
             var updatedScores = _.zip(
@@ -73,8 +73,10 @@ var computeTeamResults = function(args, logger = console) {
             _.forEach(updatedScores, tup => finalMarks.push(tup));
         });
 
-        // TODO: log members those who don't have any assigned teams
-        // logger.info(_.difference(finalMarks, marks));
+        // log members those who don't have any assigned teams
+        var illegalInputs = _.omit(marksView, _.flatten(_.values(teamView)));
+        logger.info("Illegal inputs\n", illegalInputs);
+
         return output(finalMarks, args.teamScorescsv || "./teamScores.csv");
     }).catch(err=>{console.error(err)});
 };
