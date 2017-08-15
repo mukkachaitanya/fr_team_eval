@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 const prog = require("caporal");
-const Promise = require("bluebird");
-const output = require("./output");
 const eval_teamwise = require("./eval_teamwise");
 
 prog
