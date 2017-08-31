@@ -36,21 +36,18 @@ var computeTeamResults = function(args, logger=console) {
         *   teamNumber : [Students of the team],
         * }
         */
-        var teamView = {};
+        var teamView = _.transform(teams, function (result, team) {
+          (result[team[1]] || (result[team[1]] = [])).push(team[0])
+        }, {})
 
-        // creates the object of the above form from teams array
-        teams.map(function(tuple) {
-            if (!teamView.hasOwnProperty(tuple[1])) teamView[tuple[1]] = [];
-            teamView[tuple[1]].push(tuple[0]);
-        });
-
-
-        /* marksView Object of the form: 
+        /* marksView Object of the form:
         * {
         *   studentID : int(score),
         * }
         */
-        var marksView = {};
+        // creates the object of the above from from teams array
+
+        var marksView = _.fromPairs(marks)
 
         // creates the object of the above from from teams array
         marks.map(function(tup) {
