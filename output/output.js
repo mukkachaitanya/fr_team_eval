@@ -5,9 +5,7 @@ const writeFile = Promise.promisify(require("fs").writeFile);
 // Writes the contents to the csvFile param
 var writeCSVFile = function(content, csvFile) {
 	return stringify(content).then(function(res) {
-		writeFile(csvFile, res).catch(function(err) {
-			console.log(err);
-		});
+		writeFile(csvFile, res)
 	});
 };
 

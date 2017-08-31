@@ -19,4 +19,7 @@ prog
         eval_teamwise.writeResult(args, logger);
     });
 
+/* eslint no-process-env: "off"*/
+/* eslint no-undef : "off"*/
+
 prog.parse(process.argv);

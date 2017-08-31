@@ -23,3 +23,7 @@ Outputs a teamScores.csv file to the current directory or to the file specified 
 4. Handle invalid entries.
 
 ~~5. Write basic test~~
+
+## Contributing
+
+See CONTRIBUTING.md file.

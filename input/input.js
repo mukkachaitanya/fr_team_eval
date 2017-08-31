@@ -7,7 +7,7 @@ const _ = require("lodash");
 var options = {
 	trim: true,
 	auto_parse: false,
-	columns: header => {}
+	columns: header => {} /* eslint no-unused-vars : "off" */
 };
 
 
@@ -35,7 +35,7 @@ var sqlRead = function(database, table) {
     );
     var content = [];
     return link.queryAsync("SELECT * FROM " + table)
-        .then(function(rows, fields) {
+        .then(function(rows) {
             if (rows.length !== 0) {
                 content = _.map(rows, function(row) {
                     return _.values(row);
@@ -48,7 +48,7 @@ var sqlRead = function(database, table) {
         .then(function() {
             link.end();
             return content;            
-        }).catch(err => { console.error(err); });
+        });
 };
 
 module.exports = {

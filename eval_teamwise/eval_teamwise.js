@@ -15,6 +15,10 @@ const _ = require("lodash");
 
 
 var computeTeamResults = function(args, logger=console) {
+
+    var promiseMarks;
+    var promiseTeam;
+
     // Check if whether to read from SQL.
     const sqlConfig = args.sqlConfig
     if (typeof sqlConfig !== 'undefined') {
@@ -56,7 +60,7 @@ var computeTeamResults = function(args, logger=console) {
 
         // finalMarks is of the form [[studentID, score]]
         var finalMarks = [["studentID", "score"]];
-
+        /* eslint no-unused-vars : "off" */
         _.forIn(teamView, function(members, team) {
             // pick the objects corresponding to the team members from marksView, and get the scores in array;
             // find the max of the array if scores are submitted else 0
