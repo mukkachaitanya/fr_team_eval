@@ -34,7 +34,7 @@ var computeTeamResults = function(args, logger=console) {
         */
         var teamView = _.transform(teams, function (result, team) {
           (result[team[1]] || (result[team[1]] = [])).push(team[0])
-        }, {})
+        }, {});
 
         /* marksView Object of the form:
         * {

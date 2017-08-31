@@ -1,0 +1,4 @@
+{
+  "name" : "senecaAPI",
+  "main" : "./api.js"
+}
