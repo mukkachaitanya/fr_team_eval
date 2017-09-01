@@ -15,7 +15,8 @@
     "caporal": "^0.7.0",
     "csv": "^1.1.1",
     "lodash": "^4.17.4",
-    "mysql": "^2.14.1"
+    "mysql": "^2.14.1",
+    "seneca": "^3.4.2"
   },
   "devDependencies": {
     "chai": "^4.1.1",
