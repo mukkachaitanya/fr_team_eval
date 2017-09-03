@@ -4,54 +4,77 @@ const readFile = Promise.promisify(require("fs").readFile);
 const mysql = require('mysql');
 const _ = require("lodash");
 
-var options = {
-	trim: true,
-	auto_parse: false,
-	columns: header => {} /* eslint no-unused-vars : "off" */
-};
+
+class Input {
+    constructor(){
+
+    }
+
+    read(args){
+        
+    }
+}
+
+class CsvInput extends Input{
+    constructor(){
+        super();
+        this.options = {
+            trim: true,
+            auto_parse: false,
+            columns: this.setHeaders.bind(this)  
+        };
+    }
+
+    read(file){
+        return readFile(file, "utf8").then(this.parse.bind(this));
+    }
+
+    parse(content){
+        return parser(content, this.options);
+    }
+
+    setHeaders(headers){
+        this.headers = headers;
+    }
+} 
+
+class SQLInput extends Input{
+    constructor(database){
+        super();
+        this.link = Promise.promisifyAll(
+            mysql.createConnection({
+                connectionLimit : 100, 
+                host: "localhost",
+                port: "3306",
+                user: database.user,
+                password: database.password,
+                database: database.db  
+            })
+        );
+    }
+
+    read(table){
+        return this.link.queryAsync("SELECT * FROM " + table)
+        .then(this.parse.bind(this))
+        .then(this.endLink.bind(this))
+        .then(()=>{return this.content});
+    }
+
+    parse(rows){
+        if(rows.length !== 0) {
+            this.content = _.map(rows, function(row) {
+                return _.values(row);
+            });
+        }
+        else
+            throw new Error("No contents in table " + table); 
+    }
+    endLink(){
+        this.link.end();
+    }
+}
 
 
-/*
-* Function fileContents reads the contents of a csv file and parses it
-* @returnType Object of parser class
-*/
-
-var fileContents = function(file) {
-    return readFile(file, "utf8").then(function(content) {
-        return parser(content, options);
-    });
-};
-
-var sqlRead = function(database, table) {
-    var link = Promise.promisifyAll(
-        mysql.createConnection({
-            connectionLimit : 100, 
-            host: "localhost",
-            port: "3306",
-            user: database.user,
-            password: database.password,
-            database: database.db  
-        })
-    );
-    var content = [];
-    return link.queryAsync("SELECT * FROM " + table)
-        .then(function(rows) {
-            if (rows.length !== 0) {
-                content = _.map(rows, function(row) {
-                    return _.values(row);
-                });
-            }
-            else
-                throw new Error("No contents in table " + table);
-
-        })
-        .then(function() {
-            link.end();
-            return content;            
-        });
-};
-
-module.exports = {
-    csvContents: fileContents,
-    sqlContents: sqlRead
-};
+module.exports = function(type, args) {
+    return type==='sql' ? new SQLInput(args) : new CsvInput(args);
+}

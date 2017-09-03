@@ -16,25 +16,17 @@ const _ = require("lodash");
 
 var computeTeamResults = function(args, logger=console) {
 
-    var promiseMarks;
-    var promiseTeam;
+    var databaseType = args.sqlConfig?"sql":"csv";
+    var databseConfig = args.sqlConfig || undefined ;
 
-    // Check if whether to read from SQL.
-    const sqlConfig = args.sqlConfig
-    if (typeof sqlConfig !== 'undefined') {
-        promiseMarks = input.sqlContents(sqlConfig, args.scores)
-        promiseTeam = input.sqlContents(sqlConfig, args.teams)
-    }
-    else {
-        // promises which resolve to return contents parsed of the scorescsv file and teamcsv files
-        promiseMarks = input.csvContents(args.scores);
-        promiseTeam = input.csvContents(args.teams);
-    }
+    var promiseMarks = input(databaseType, databseConfig).read(args.scores);
+    var promiseTeam = input(databaseType, databseConfig).read(args.teams);
+
     return Promise.all([promiseMarks, promiseTeam]).then(function(res) {
         // res contains the returns of all the promises in the order of as in the input array of promises
         const marks = res[0]; // [[studentID,score]]
         const teams = res[1]; // [[studentID,team]]
-
+        
         /* teamView Object of the form:
         * {
         *   teamNumber : [Students of the team],
@@ -78,7 +70,7 @@ var computeTeamResults = function(args, logger=console) {
 
         // log members those who don't have any assigned teams
         var illegalInputs = _.omit(marksView, _.flatten(_.values(teamView)));
-        logger.info("Illegal inputs\n", illegalInputs);
+        illegalInputs && logger.info("Illegal inputs\n", illegalInputs);
 
         return output(finalMarks, args.teamScorescsv || "./teamScores.csv");
     }).catch(err => { logger.error(err)});
