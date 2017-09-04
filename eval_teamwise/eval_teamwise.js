@@ -45,8 +45,7 @@ var computeTeamResults = function(args, logger=console) {
         }, {})
         
         
-        
-	marks.map(function(tup) {
+		marks.map(function(tup) {
             tup[1] = parseInt(tup[1]);
         });
 	
@@ -56,20 +55,18 @@ var computeTeamResults = function(args, logger=console) {
         * }
         */
         // creates the object of the above from from teams array
-	var marksView = _.transform(marks, function (result, team) {
+		var marksView = _.transform(marks, function (result, team) {
           (result[team[0]] || (result[team[0]] = [])).push(team[1])
         }, {})        
 	
 
-
-
-        // finalMarks is of the form [[studentID, score]]
+		 // finalMarks is of the form [[studentID, score]]
         var finalMarks = [["studentID", "score"]];
         /* eslint no-unused-vars : "off" */
         _.forIn(teamView, function(members, team) {
             // pick the objects corresponding to the team members from marksView, and get the scores in array;
             // find the max of the array if scores are submitted else 0
-	    var maxScore = _.max(_.values(marksView[team])) || 0
+	    	var maxScore = _.max(_.values(marksView[team])) || 0
 
             // zip together the student id and the maxScore; type: [[id,score]]
             var updatedScores = _.zip(
@@ -82,8 +79,8 @@ var computeTeamResults = function(args, logger=console) {
         });
 
         // log members those who don't have any assigned teams
-        //var illegalInputs = _.omit(marksView, _.flatten(_.values(teamView)));
-        //logger.info("Illegal inputs\n", illegalInputs);
+        	//var illegalInputs = _.omit(marksView, _.flatten(_.values(teamView)));
+        	//logger.info("Illegal inputs\n", illegalInputs);
 
         return output(finalMarks, args.teamScorescsv || "./teamScores.csv");
     }).catch(err => { logger.error(err)});
