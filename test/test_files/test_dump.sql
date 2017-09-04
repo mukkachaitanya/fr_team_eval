@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `scores`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `scores` (
-  `studentID` varchar(20) DEFAULT NULL,
+  `team` varchar(20) DEFAULT NULL,
   `score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -34,7 +34,9 @@ CREATE TABLE `scores` (
 
 LOCK TABLES `scores` WRITE;
 /*!40000 ALTER TABLE `scores` DISABLE KEYS */;
-INSERT INTO `scores` VALUES ('2012A7PS001G',9),('2012A7PS005G',9),('2011B1A7001G',8),('2012A7PS003G',4),('student1',5),('student2',2),('student3',3);
+INSERT INTO `scores` VALUES ('1',3),('2',9),('4',8),('1',4),('3',5),('4',2),('1',3);
+/*INSERT INTO `scores` VALUES ('2012A7PS001G',9),('2012A7PS005G',9),('2011B1A7001G',8),('2012A7PS003G',4),('student1',5),('student2',2),('student3',3);*/
+
 /*!40000 ALTER TABLE `scores` ENABLE KEYS */;
 UNLOCK TABLES;
 
