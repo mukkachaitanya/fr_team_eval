@@ -32,7 +32,7 @@ var computeTeamResults = function(args, logger=console) {
     }
     return Promise.all([promiseMarks, promiseTeam]).then(function(res) {
         // res contains the returns of all the promises in the order of as in the input array of promises
-        const marks = res[0]; // [[studentID,score]]
+        const marks = res[0]; // [[team,score]]
         const teams = res[1]; // [[studentID,team]]
 
         /* teamView Object of the form:
@@ -43,20 +43,25 @@ var computeTeamResults = function(args, logger=console) {
         var teamView = _.transform(teams, function (result, team) {
           (result[team[1]] || (result[team[1]] = [])).push(team[0])
         }, {})
-
+        
+        
+        
+	marks.map(function(tup) {
+            tup[1] = parseInt(tup[1]);
+        });
+	
         /* marksView Object of the form:
         * {
-        *   studentID : int(score),
+        *   team : [int(score) of memebers of team],
         * }
         */
         // creates the object of the above from from teams array
+	var marksView = _.transform(marks, function (result, team) {
+          (result[team[0]] || (result[team[0]] = [])).push(team[1])
+        }, {})        
+	
 
-        var marksView = _.fromPairs(marks)
 
-        // creates the object of the above from from teams array
-        marks.map(function(tup) {
-            marksView[tup[0]] = parseInt(tup[1]);
-        });
 
         // finalMarks is of the form [[studentID, score]]
         var finalMarks = [["studentID", "score"]];
@@ -64,7 +69,7 @@ var computeTeamResults = function(args, logger=console) {
         _.forIn(teamView, function(members, team) {
             // pick the objects corresponding to the team members from marksView, and get the scores in array;
             // find the max of the array if scores are submitted else 0
-            var maxScore = _.max(_.values(_.pick(marksView, members))) || 0;
+	    var maxScore = _.max(_.values(marksView[team])) || 0
 
             // zip together the student id and the maxScore; type: [[id,score]]
             var updatedScores = _.zip(
@@ -77,8 +82,8 @@ var computeTeamResults = function(args, logger=console) {
         });
 
         // log members those who don't have any assigned teams
-        var illegalInputs = _.omit(marksView, _.flatten(_.values(teamView)));
-        logger.info("Illegal inputs\n", illegalInputs);
+        //var illegalInputs = _.omit(marksView, _.flatten(_.values(teamView)));
+        //logger.info("Illegal inputs\n", illegalInputs);
 
         return output(finalMarks, args.teamScorescsv || "./teamScores.csv");
     }).catch(err => { logger.error(err)});
