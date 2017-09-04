@@ -72,7 +72,7 @@ var computeTeamResults = function(args, logger=console) {
         var illegalInputs = _.omit(marksView, _.flatten(_.values(teamView)));
         illegalInputs && logger.info("Illegal inputs\n", illegalInputs);
 
-        return output(finalMarks, args.teamScorescsv || "./teamScores.csv");
+        return output.write(finalMarks, args.teamScorescsv || "./teamScores.csv");
     }).catch(err => { logger.error(err)});
 };
 
