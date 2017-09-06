@@ -3,7 +3,7 @@ const mysql=require("mysql");
 
 var insMarks=function(content,tableName,headers){
     var insertMarks=
-        `INSERT INTO ${tableName}  (${headers[0]},${headers[1]} VALUES ? ` ;
+        `INSERT INTO ${tableName}  ${headers[0]},${headers[1]} VALUES ? ` ;
      connection.query(insertMarks, [content],function(err, rows, fields)
                                         {if(err) console.error(err.message);
                                         });
