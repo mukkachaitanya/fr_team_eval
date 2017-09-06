@@ -70,7 +70,7 @@ var computeTeamResults = function(args, logger=console) {
 
         // log members those who don't have any assigned teams
         var illegalInputs = _.omit(marksView, _.flatten(_.values(teamView)));
-        illegalInputs && logger.info("Illegal inputs\n", illegalInputs);
+        logger.info("Illegal inputs\n", illegalInputs);
 
         var writeUpdatedScore = new Output(finalMarks, args.teamScorescsv || "./teamScores.csv")
         return writeUpdatedScore.writeContents();
