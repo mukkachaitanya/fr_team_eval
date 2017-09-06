@@ -4,27 +4,25 @@ const writeFile = Promise.promisify(require("fs").writeFile);
 
 
 class Output {
-    constructor(){
 
-    }
-
-    write(args){
-        
+    writeContents(args){
+        return this.write(args);
     }
 }
 
 class CSVWrite extends Output{
 
-	constructor(){
-		super();	
+	constructor(content, csvFile){
+		super();
+		this.content = content;
+		this.csvFile = csvFile;	
 	}
 
-	write(content, csvFile){
+	write(){
+		return stringify(this.content)
+				.then(res => writeFile(this.csvFile, res, {flag: 'w'}).bind(this));
 
-		return stringify(content).then(function(res) {
-			writeFile(csvFile, res)
-		});
 	}
 
 }
-module.exports = new CSVWrite();
+module.exports = CSVWrite;

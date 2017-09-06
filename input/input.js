@@ -6,27 +6,25 @@ const _ = require("lodash");
 
 
 class Input {
-    constructor(){
-
-    }
-
-    read(args){
-        
+    
+    readContents(args){
+        return this.read(args);
     }
 }
 
 class CsvInput extends Input{
-    constructor(){
+    constructor(file){
         super();
         this.options = {
             trim: true,
             auto_parse: false,
             columns: this.setHeaders.bind(this)  
         };
+        this.file = file;
     }
 
-    read(file){
-        return readFile(file, "utf8").then(this.parse.bind(this));
+    read(){
+        return readFile(this.file, "utf8").then(this.parse.bind(this));
     }
 
     parse(content){
@@ -39,7 +37,7 @@ class CsvInput extends Input{
 } 
 
 class SQLInput extends Input{
-    constructor(database){
+    constructor(table, database){
         super();
         this.link = Promise.promisifyAll(
             mysql.createConnection({
@@ -51,13 +49,14 @@ class SQLInput extends Input{
                 database: database.db  
             })
         );
+        this.table = table;
     }
 
-    read(table){
-        return this.link.queryAsync("SELECT * FROM " + table)
+    read(){
+        return this.link.queryAsync("SELECT * FROM " + this.table)
         .then(this.parse.bind(this))
         .then(this.endLink.bind(this))
-        .then(()=>{return this.content});
+        .then(() => {return this.content});
     }
 
     parse(rows){
@@ -67,7 +66,7 @@ class SQLInput extends Input{
             });
         }
         else
-            throw new Error("No contents in table " + table); 
+            throw new Error("No contents in table " + this.table); 
     }
     endLink(){
         this.link.end();
@@ -75,6 +74,6 @@ class SQLInput extends Input{
 }
 
 
-module.exports = function(type, args) {
-    return type==='sql' ? new SQLInput(args) : new CsvInput(args);
+module.exports = function(type, source, config) {
+    return type==='sql' ? new SQLInput(source, config) : new CsvInput(source);
 }

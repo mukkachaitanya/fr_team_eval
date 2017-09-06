@@ -1,6 +1,6 @@
 const Promise = require("bluebird");
 const input = require("../input");
-const output = require("../output");
+const Output = require("../output");
 const _ = require("lodash");
 
 /*
@@ -19,8 +19,8 @@ var computeTeamResults = function(args, logger=console) {
     var databaseType = args.sqlConfig?"sql":"csv";
     var databseConfig = args.sqlConfig || undefined ;
 
-    var promiseMarks = input(databaseType, databseConfig).read(args.scores);
-    var promiseTeam = input(databaseType, databseConfig).read(args.teams);
+    var promiseMarks = input(databaseType, args.scores, databseConfig).readContents();
+    var promiseTeam = input(databaseType, args.teams, databseConfig).readContents();
 
     return Promise.all([promiseMarks, promiseTeam]).then(function(res) {
         // res contains the returns of all the promises in the order of as in the input array of promises
@@ -72,7 +72,8 @@ var computeTeamResults = function(args, logger=console) {
         var illegalInputs = _.omit(marksView, _.flatten(_.values(teamView)));
         illegalInputs && logger.info("Illegal inputs\n", illegalInputs);
 
-        return output.write(finalMarks, args.teamScorescsv || "./teamScores.csv");
+        var writeUpdatedScore = new Output(finalMarks, args.teamScorescsv || "./teamScores.csv")
+        return writeUpdatedScore.writeContents();
     }).catch(err => { logger.error(err)});
 };
 
