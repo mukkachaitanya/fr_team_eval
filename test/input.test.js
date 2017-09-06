@@ -11,7 +11,7 @@ describe("Input", function() {
 		}
 
 	it("CSV: should match parsed input", function(done) {
-		input('csv').read(__dirname+"/test_files/scores.csv").then(function(contents) {
+		input('csv', __dirname+"/test_files/scores.csv").readContents().then(function(contents) {
 			const expectRows = [
 				["2012A7PS001G", "9"],
 				["2012A7PS005G", "9"],
@@ -29,7 +29,7 @@ describe("Input", function() {
 	it("SQL: should return proper parsed data", function(done) {
 		
 		var table = "teams";
-		input('sql',testConfig).read(table).then(function(res) {
+		input('sql',table, testConfig).readContents().then(function(res) {	
 			const expectedResults = [
 				["2012A7PS001G", "1"],
 				["2012A7PS005G", "1"],
