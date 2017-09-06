@@ -21,7 +21,7 @@ var outputTable=function(database,content,tableName){
       var headers=content.shift();
       var sql = `CREATE TABLE ${tableName} IF NOT EXISTS (${headers[0]} VARCHAR(12),${headers[1]} INT`;
       connection.queryAsync(sql)
-            .catch(err => { console.error(err);
+            .catch(err => { console.error(err)};
       insMarks(content,tableName,headers);
 
 
