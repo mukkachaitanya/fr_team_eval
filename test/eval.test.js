@@ -8,8 +8,6 @@ const expect = require("chai").expect;
 
 describe("Evaluation", function() {
 	it("should assign expected marks", function(done) {
-		/*var expectedMarks =
-			"studentID,score\n2012A7PS001G,9\n2012A7PS005G,9\nstudent1,5\nstudent3,5\n2011B1A7001G,8\n2012A7PS003G,8\nstudent2,8\n";*/
 		var expectedMarks =
 			"studentID,score\n2012A7PS001G,4\n2012A7PS005G,4\nstudent1,5\nstudent3,5\n2011B1A7001G,8\n2012A7PS003G,8\nstudent2,8\n";
 		var tempFile = __dirname + "/tempFile.csv";
